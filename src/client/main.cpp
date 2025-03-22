@@ -310,7 +310,7 @@ void readTaskHandler(int clientfd)
         if (MSG_LOGIN_ACK == msgtype)
         {
             doLoginResponse(js); // 处理登录响应的业务逻辑
-            sem_post(&rwsem);    // 通知主线程，登录结果处理完成
+            sem_pt(&rwsem);    // 通知主线程，登录结果处理完成
             continue;
         }
 

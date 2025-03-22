@@ -128,6 +128,7 @@ void ChatService::login(const TcpConnectionPtr &tcpconn,
         response["msgId"] = MSG_LOGIN_ACK;
         response["errNo"] = LOGIN_FAILED;
         response["errMsg"] = "Login failed! Please try again.";
+        tcpconn->send(response.dump());
     }
 }
 
@@ -224,7 +225,7 @@ void ChatService::p2pchat(const TcpConnectionPtr &conn,
             msg["name"] = js["name"];
             msg["time"] = ts.toString();
 
-            conn->send(msg.dump());
+            it->second->send(msg.dump());
         }
     }
 }
@@ -274,7 +275,7 @@ void ChatService::group_chat(const TcpConnectionPtr &conn,
         else
         {
             // Forward offline messages
-            _offlinemessagemodel->insert(id,js.dump());
+            _offlinemessagemodel->insert(id, js.dump());
         }
     }
 }
